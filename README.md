@@ -17,6 +17,11 @@ Persiapkan software yang diperlukan seperti telah menginstal Node.js, Express, d
 - Menghapus todo
 - Menghapus semua todo
 
+# Login
+# Endpoint Login 
+Berikut endpoint untuk login:
+```POST /auth/login```
+
 # User
 # Data User
 Struktur data User sebagai berikut :
