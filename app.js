@@ -1,5 +1,7 @@
 const express = require('express');
-const app = express()
+const cors = require('cors');
+
+const app = express();;
 
 const PORT = process.env.PORT || 3000
 
@@ -7,17 +9,17 @@ const allRoutes = require("./routes")
 const db = require("./config/db")
 
 db.then(() => {
-  console.log("berhasi konek ke mongoDB")
+    console.log("Berhasil Connect Ke MongoDB")
 })
 .catch(() => {
-  console.log("gagal konek ke mongoDB")
+    console.log("gagal konek ke mongoDB")
 })
 
+app.use(cors())
 app.use(express.json())
-app.use(allRoutes)
 
+app.use(allRoutes)
 
 app.listen(PORT, () =>{
     console.log("server running on port " + PORT)
 })
-
