@@ -5,6 +5,7 @@ const {
   createUser,
   getUserTodos
 } = require("../controllers/user-controller");
+const verifyToken = require("../middleware/auth");
 
 const route = express.Router();
 
