@@ -17,8 +17,17 @@ module.exports = {
     }
   },
 
-  getUserById: (req, res) => {
-      
+  getUserById: async (req, res) => {
+    try {
+      const id = req.params.id;
+      const user = await User.findById(id);
+      res.status(200).json({
+        message: "Berhasil mendapatkan user by id",
+        data: user,
+      });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
   },
   
   getUserTodos: async (req, res) => {

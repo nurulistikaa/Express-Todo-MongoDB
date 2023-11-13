@@ -17,7 +17,6 @@ db.then(() => {
 
 app.use(cors())
 app.use(express.json())
-
 app.use(allRoutes)
 
 app.listen(PORT, () =>{
