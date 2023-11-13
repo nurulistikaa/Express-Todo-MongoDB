@@ -1,18 +1,18 @@
 const express = require('express');
 const cors = require('cors');
 
+const allRoutes = require("./routes")
+const db = require("./config/db")
+
 const app = express();;
 
 const PORT = process.env.PORT || 3000
-
-const allRoutes = require("./routes")
-const db = require("./config/db")
 
 db.then(() => {
     console.log("Berhasil Connect Ke MongoDB")
 })
 .catch(() => {
-    console.log("gagal konek ke mongoDB")
+    console.log("Gagal Connect Ke MongoDB")
 })
 
 app.use(cors())
