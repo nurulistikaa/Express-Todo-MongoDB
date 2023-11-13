@@ -6,29 +6,25 @@ const User = require("../models/user")
 
 module.exports = {
   login: async (req, res) => {
-      const { email, password } = req.body
+    const userLogin = req.body 
 
-      try {
-          const user = await User.findOne({ email })
-          if (user){
-              const passwordMatch = await bcrypt.compare(password, user.password);
+    try {
+      const user = await User.findOne({email: userLogin.email})
+      if (!user) throw new Error("invalid user")
+  
+      console.log(user.password, userLogin.password);
+      if (user.password !== userLogin.password) throw new Error("invalid user")
+  
+      const token = jwt.sign({id: user._id, email: user.email}, process.env.JWT_KEY)
+  
+      res.json({
+        message: "login successfully",
+        userId: user._id,
+        token,
+      })
+    } catch (error) {
+      res.json(error.message)
+    }
+  },
 
-              if (passwordMatch){
-                  const token = jwt.sign({id: user._id, email: user.email}, process.env.JWT_KEY)
-                  res.status(200).json({
-                      message: "Login Successfully",
-                      name: user.name,
-                      userId: user._id,
-                      token,
-                    });
-              } else {
-                  res.status(401).json({ error: 'Password salah' });
-              }
-          } else {
-              res.status(401).json({ error: "User Tidak Ditemukan" })
-          }
-      } catch (error) {
-          res.status(400).json({ message: error.message });
-      }
-  }
 }
