@@ -29,7 +29,7 @@ module.exports = {
       res.status(400).json({ error: error.message });
     }
   },
-  
+
   getUserTodos: async (req, res) => {
     try {
       const id = req.params.id;
@@ -55,6 +55,38 @@ module.exports = {
       });
     } catch (error) {
         res.status(400).json({ error: error.message });
+    }
+  },
+
+  deleteUser: async (req, res) => {
+    try {
+      const user = await User.findByIdAndDelete(req.params.id);
+      if (user) {
+        res.status(200).json({
+          message: "Berhasil menghapus data user by id",
+          data: user,
+        });
+      } else {
+        res.status(404).json({ message: "User not found" });
+      }
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  },
+  
+  deleteAllUser: async (req, res) => {
+    try {
+      const user = await User.deleteMany();
+      if (user.deletedCount > 0) {
+        res.status(200).json({
+          message: "Berhasil menghapus semua data user",
+          data: user,
+        });
+      } else {
+        res.status(404).json({ message: "No users to delete" });
+      }
+    } catch (err) {
+      res.status(500).json({ message: err.message });
     }
   },
 };
